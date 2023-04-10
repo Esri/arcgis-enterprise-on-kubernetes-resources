@@ -9,9 +9,12 @@ This repository contains the following items:
 * xxx
 * xxx
 
-## Contributing
+## 
 
-This is a read-only repository and is not open for public contributions.
+## Contributing
+Find a bug or want to request a new feature? Please let us know by submitting an issue.
+
+Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
 
 ## Licensing
 Copyright 2018-2022 Esri
