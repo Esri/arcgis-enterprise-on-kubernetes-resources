@@ -1,0 +1,41 @@
+allowHostPorts: false
+priority: null
+requiredDropCapabilities:
+  - ALL
+allowPrivilegedContainer: true
+runAsUser:
+  type: RunAsAny
+users: 
+  - 'system:serviceaccount:<namespace>:arcgis-elastic-serviceaccount'
+allowHostDirVolumePlugin: false
+seccompProfiles:
+  - runtime/default
+allowHostIPC: false
+seLinuxContext:
+  type: MustRunAs
+readOnlyRootFilesystem: false
+metadata:
+  name: privileged-esri
+fsGroup:
+  type: MustRunAs
+  ranges:
+  - min: 117932853
+    max: 117932853
+groups: []
+kind: SecurityContextConstraints
+defaultAddCapabilities: null
+supplementalGroups:
+  type: RunAsAny
+volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - ephemeral
+  - persistentVolumeClaim
+  - projected
+  - secret
+allowHostPID: false
+allowHostNetwork: false
+allowPrivilegeEscalation: false
+apiVersion: security.openshift.io/v1
+allowedCapabilities:
