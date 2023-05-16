@@ -4,10 +4,10 @@ This repo contains supplemental information to the ArcGIS Enterprise on Kubernet
 To learn more about ArcGIS Enterprise on Kubernetes, visit the product documentation [here](https://enterprise-k8s.arcgis.com/en/latest/deploy/kubernetes-concepts.htm/).
 
 ## What's included
-This repository contains the following items:
-* xxx
-* xxx
-* xxx
+This repository contains a number of sample YAML files to support the creation of the following items:
+* Deployment role
+* Security Context Constraint examples for RedHat OpenShift
+* Storage Class examples for supported providers
 
 ## Issues
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
