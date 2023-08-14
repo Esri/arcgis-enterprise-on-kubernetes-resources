@@ -50,6 +50,6 @@ volumes:
   - secret
 allowHostPID: false
 allowHostNetwork: false
-allowPrivilegeEscalation: false
+allowPrivilegeEscalation: true
 apiVersion: security.openshift.io/v1
 allowedCapabilities:
