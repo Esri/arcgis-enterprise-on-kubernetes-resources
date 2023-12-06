@@ -5,13 +5,13 @@ To learn more about ArcGIS Enterprise on Kubernetes, visit the product documenta
 
 ## What's included
 This repository contains a number of sample YAML files to support the creation of the following items:
-* Deployment role
-* Security Context Constraint examples for RedHat OpenShift
-* Storage Class examples for supported providers
+* [Deployment role](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/tree/main/Deployment)
+* [Security Context Constraint examples](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/tree/main/SecurityContextConstraints/RedHatOpenShift) for RedHat OpenShift
+* [Storage Class examples](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/tree/main/StorageClasses) for supported providers
 
 Additionally, the repository also contains:
-* Deployment guides for Amazon EKS and Azure Kubernetes Service
-* Dashboard templates for integration with existing Grafana installations
+* [Deployment guides](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/tree/main/Guides) for Amazon EKS and Azure Kubernetes Service
+* [Dashboard templates](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/tree/main/DashboardTemplates) for integration with existing Grafana installations
 
 ## Issues
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
