@@ -9,6 +9,10 @@ This repository contains a number of sample YAML files to support the creation o
 * Security Context Constraint examples for RedHat OpenShift
 * Storage Class examples for supported providers
 
+Additionally, the repository also contains:
+* Deployment guides for Amazon EKS and Azure Kubernetes Service
+* Dashboard templates for integration with existing Grafana installations
+
 ## Issues
 Find a bug or want to request a new feature? Please let us know by submitting an issue.
 
