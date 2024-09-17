@@ -31,7 +31,7 @@ Introduction
 ---
 The following will provide guidance on setting up a client workstation, provisioning and connecting to an Azure Kubernetes Service (AKS) cluster, and deploying ArcGIS Enterprise on Kubernetes.
  
-The cluster’s Kubernetes version will be 1.26.x (the latest supported 1.26 release) and consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. A network load balancer will handle ingress from the internet to the internal cluster network pod IPs. An Azure hosted zone is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
+The cluster’s Kubernetes version will be the latest stable release; an earlier version may need to be specified depending on which ArcGIS Enterprise on Kubernetes version you are planning to deploy. It will consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. An Azure Load Balancer will handle ingress from the internet to the internal cluster network pod IPs. An Azure hosted zone is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
  
 The commands provided in this guide may need to be modified to meet your organizational needs. Placeholders, denoted as <variable\>, must be replaced with the relevant deployment information prior to running the command.
 
