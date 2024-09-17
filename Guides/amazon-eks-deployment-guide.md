@@ -41,7 +41,7 @@ Prepare the client workstation
 ### 1. Install kubectl
 &emsp;a. Download kubectl
 ```shell
-curl -LO https://dl.k8s.io/release/v1.25.11/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.29.9/bin/linux/amd64/kubectl
 ```
 
 &emsp;b. Add executable permissions and move to location on path
