@@ -112,7 +112,7 @@ export CLUSTER_NAME=<clusterName>
 az aks create --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --node-count 6 --node-vm-size Standard_D8s_v3 --assign-identity $IDENTITY_RESOURCE_ID --enable-azure-keyvault-kms --azure-keyvault-kms-key-vault-network-access "Public" --azure-keyvault-kms-key-id $KEY_ID
 ```
 
-&emsp;&emsp;Reference: https://learn.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create()
+&emsp;&emsp;Reference: https://learn.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az-aks-create
 
 Install cluster dependencies
 ---
