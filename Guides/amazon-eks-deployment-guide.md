@@ -31,7 +31,7 @@ Introduction
 ---
 The following will provide guidance on setting up a client workstation, provisioning and connecting to an Amazon EKS cluster, and deploying ArcGIS Enterprise on Kubernetes.
  
-The cluster’s Kubernetes version will be 1.26.x (the latest supported 1.26 release) and consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. A network load balancer will handle ingress from the internet to the internal cluster network pod IPs using the Amazon VPC CNI plugin. Route 53 is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
+The cluster’s Kubernetes version will be 1.29.x (the latest supported 1.29 release) and consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. A network load balancer will handle ingress from the internet to the internal cluster network pod IPs using the Amazon VPC CNI plugin. Route 53 is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
  
 The commands provided in this guide may need to be modified to meet your organizational needs. Placeholders, denoted as <variable\>, must be replaced with the relevant deployment information prior to running the command.
 
@@ -41,7 +41,7 @@ Prepare the client workstation
 ### 1. Install kubectl
 &emsp;a. Download kubectl
 ```shell
-curl -LO https://dl.k8s.io/release/v1.25.11/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.29.9/bin/linux/amd64/kubectl
 ```
 
 &emsp;b. Add executable permissions and move to location on path
@@ -119,7 +119,7 @@ Reference: https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.htm
 ```shell
 CLUSTER_NAME=<clusterName>
 REGION=<region>
-eksctl create cluster --managed --with-oidc --name=$CLUSTER_NAME --version=1.26 --region=$REGION --zones=$REGION'a',$REGION'b' --nodes-min=6 --nodes-max=6 --instance-types=m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge --node-zones=$REGION'a'
+eksctl create cluster --managed --with-oidc --name=$CLUSTER_NAME --version=1.29 --region=$REGION --zones=$REGION'a',$REGION'b' --nodes-min=6 --nodes-max=6 --instance-types=m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge,m5.2xlarge --node-zones=$REGION'a'
 ```
 
 &emsp;&emsp;Reference: https://eksctl.io/usage/creating-and-managing-clusters/#creating-a-cluster
@@ -136,7 +136,7 @@ Install cluster dependencies
 ### 1. Creating service accounts for AWS Load Balancer Controller and EBS CSI Driver
 &emsp;a. Create IAM policy for AWS Load Balancer Controller (run once per AWS organization)
 ```shell
-curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.7/docs/install/iam_policy.json
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.8.2/docs/install/iam_policy.json
 aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam_policy.json
@@ -178,7 +178,8 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=$CLUSTER_NAME \
   --set serviceAccount.create=false \
-  --set serviceAccount.name=aws-load-balancer-controller 
+  --set serviceAccount.name=aws-load-balancer-controller \
+  --version 1.8.2
 ```
 
 &emsp;&emsp;Reference: https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
