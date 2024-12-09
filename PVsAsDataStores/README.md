@@ -1,4 +1,4 @@
-When registering a persistent volume as a folder data store, a JSON file must be constructed that contains the volume spec. The volume spec is a collection of properties that are used to create the persistent volume claim (PVC) object. The elements included in the volume spec are used for matching and binding of the created PVC to the child PV object. Use of volumeName and labels is recommended to ensure a single PV is identified as a candidate for matching.
+When registering a persistent volume as a folder data store, a JSON file must be constructed that contains the volume specification. The volume specification is a collection of properties that are used to create the persistent volume claim (PVC) object. The elements included in the volume specification are used for matching and binding of the created PVC to the child PV object. Use of volumeName and labels is recommended to ensure a single PV is identified as a candidate for matching.
 
 | Property | Description | Required |
 |--|--|--|
