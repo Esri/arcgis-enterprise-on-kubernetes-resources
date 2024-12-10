@@ -11,7 +11,7 @@ To avoid overlap with the ArcGIS Enterprise on Kubernetes namespace, the cluster
 <br>    a. `kubectl get secret <siteName>-container-registry -n <organizationNamespace> -o yaml | grep -v '^\s*namespace:\s' | kubectl apply -n arcgis-notebook-images -f -`
 <br>        i. The default siteName is `arcgis` and organizationNamespace should be replaced with the namespace where ArcGIS Enterprise on Kubernetes is already deployed.
 5. Create daemonset:
-<br>    a. Download [YAML file](https://github.com/Esri/arcgis-enterprise-on-kubernetes/blob/main/Notebooks/notebook-image-preloader.yaml)
+<br>    a. Download [YAML file](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/Notebooks/notebook-image-preloader.yaml)
 <br>    b. Edit any necessary fields (i.e. uncomment node selector or change namespace)
 <br>    c. Apply YAML file
 <br>        i. `kubectl apply -f notebook-image-preloader.yaml`
