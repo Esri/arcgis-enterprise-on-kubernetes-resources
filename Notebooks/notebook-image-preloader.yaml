@@ -19,7 +19,7 @@ spec:
       initContainers:
         - name: notebookserver
           imagePullPolicy: Always
-          image: harbor-west.esri.com/endeavour-stable/arcgis-notebook-server:dev-stable
+          image: docker.io/esridocker/arcgis-notebook-server:11.4.0.6285
           command: ["sh", "-c", "'true'"]
           resources:
             limits:
@@ -30,7 +30,7 @@ spec:
               memory: 64Mi
         - name: notebookinitcontainer
           imagePullPolicy: Always
-          image: harbor-west.esri.com/endeavour-stable/enterprise-admin-tools:dev-stable
+          image: docker.io/esridocker/enterprise-admin-tools:11.4.0.6285
           command: ["sh", "-c", "'true'"]
           resources:
             limits:
@@ -41,7 +41,7 @@ spec:
               memory: 64Mi
         - name: notebookhandler
           imagePullPolicy: Always
-          image: harbor-west.esri.com/endeavour-stable/arcgis-notebook-handler:dev-stable
+          image: docker.io/esridocker/arcgis-notebook-handler:11.4.0.6285
           command: ["sh", "-c", "'true'"]
           resources:
             limits:
@@ -57,7 +57,7 @@ spec:
       containers:
         - name: pause
           imagePullPolicy: Always
-          image: harbor-west.esri.com/endeavour-stable/arcgis-busybox:dev-stable
+          image: docker.io/esridocker/arcgis-busybox:11.4.0.6285
           command: ["sh", "-c", "trap : TERM INT; sleep 750d & wait"]
           resources:
             limits:
