@@ -562,7 +562,7 @@ QUEUE_STORAGE_LABEL_2="arcgis/app=rabbitmq"
 
 # Spatiotemporal and Index Store
 INDEXER_STORAGE_TYPE="DYNAMIC"
-INDEXER_STORAGE_SIZE="16Gi"
+INDEXER_STORAGE_SIZE="150Gi"
 INDEXER_STORAGE_CLASS="premium-rwo"
 INDEXER_STORAGE_LABEL_1="arcgis/tier=storage"
 INDEXER_STORAGE_LABEL_2="arcgis/app=elasticsearch"
