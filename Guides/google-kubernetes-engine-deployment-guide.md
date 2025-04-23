@@ -30,7 +30,7 @@ Introduction
 ---
 The following will provide guidance on setting up a client workstation, provisioning and connecting to a GKE cluster, and deploying ArcGIS Enterprise on Kubernetes.
  
-The cluster’s Kubernetes version will be 1.30.x (the latest supported 1.30 release) and consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. A network load balancer will handle ingress from the internet to the internal cluster network pod IPs using the Amazon VPC CNI plugin. Google's Cloud DNS service is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
+The cluster’s Kubernetes version will be 1.30.x (the latest supported 1.30 release) and consist of 6 nodes to support the enhanced availability architecture profile with additional capacity for publishing dedicated services. A load balancer will handle ingress from the internet to the bundled ingress controller. Google's Cloud DNS service is the DNS provider used as an example in this guide, but any provider can instead be manually configured when you create the DNS record.
  
 The commands provided in this guide may need to be modified to meet your organizational needs. Placeholders, denoted as <variable\>, must be replaced with the relevant deployment information prior to running the command.
 
@@ -344,7 +344,7 @@ K8S_AVAILABILITY_TOPOLOGY_KEY="kubernetes.io/hostname"
 
 Create DNS record
 ---
-### 1. If using Google's Cloud DNS service for DNS: Create A record to point to NLB service resource (requires a previously configured hosted zone)
+### 1. If using Google's Cloud DNS service for DNS: Create A record to point to LB service resource (requires a previously configured hosted zone)
 ```shell
 DNS_Alias=$(kubectl get secret arcgis-env-variables -n arcgis -o json | jq -r '.data["env-variables.json"]' | base64 -d | jq -r
 '.ARCGIS_ENTERPRISE_FQDN')
@@ -358,7 +358,7 @@ gcloud dns record-sets create $DNS_Alias --rrdatas=$LB_IP --type=A --ttl=60 --zo
 kubectl get svc -n arcgis | grep LoadBalancer | awk '{print $4}'
 ```
 
-&emsp;b. Create CNAME record in DNS provider console (map deployment FQDN to NLB DNS alias)
+&emsp;b. Create CNAME record in DNS provider console (map deployment FQDN to LB IP address)
 
 Create your ArcGIS Enterprise on Kubernetes organization
 ---
