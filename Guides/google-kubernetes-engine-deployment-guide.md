@@ -83,7 +83,7 @@ Create a Google Kubernetes engine cluster
 ```shell
 CLUSTER_NAME=<clusterName>
 REGION=<region>
-gcloud container clusters create $CLUSTER_NAME --cluster-version=1.30 --location=$REGION --enable-network-policy --node-locations=$REGION-a --num-nodes=6 --machine-type=e2-standard-8
+gcloud container clusters create $CLUSTER_NAME --cluster-version=1.30 --location=$REGION --node-locations=$REGION-a --num-nodes=6 --machine-type=e2-standard-8
 ```
 
 &emsp;&emsp;Reference: https://cloud.google.com/sdk/gcloud/reference/container/clusters/create
@@ -352,13 +352,13 @@ LB_IP=$(kubectl get svc -n arcgis | grep LoadBalancer | awk '{print $4}')
 gcloud dns record-sets create $DNS_Alias --rrdatas=$LB_IP --type=A --ttl=60 --zone=<zoneName>
 ```
 
-### 2. If using external DNS provider: Create CNAME record to point to Load Balancer IP address
+### 2. If using external DNS provider: Create A record to point to Load Balancer IP address
 &emsp;a. Get LB IP address
 ```shell
 kubectl get svc -n arcgis | grep LoadBalancer | awk '{print $4}'
 ```
 
-&emsp;b. Create CNAME record in DNS provider console (map deployment FQDN to LB IP address)
+&emsp;b. Create A record in DNS provider console (map deployment FQDN to LB IP address)
 
 Create your ArcGIS Enterprise on Kubernetes organization
 ---
