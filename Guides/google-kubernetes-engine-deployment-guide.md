@@ -396,7 +396,7 @@ K8S_NAMESPACE="arcgis"
 # For example, the context path of 'https://<FQDN>/arcgis/admin' would be 'arcgis'.
 CONTEXT="arcgis"
 # The fully qualified domain name to access ArcGIS Enterprise on Kubernetes.
-ARCGIS_ENTERPRISE_FQDN="arcgis"
+ARCGIS_ENTERPRISE_FQDN="gis.prod.organization.com"
 
 # ------------------------------------
 # LICENSE PROPERTIES
