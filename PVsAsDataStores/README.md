@@ -1,9 +1,9 @@
 Starting at ArcGIS Enterprise on Kubernetes version 11.4, you can register a folder data store that uses a persistent volumne (PV). See [Manage folder data stores](https://enterprise-k8s.arcgis.com/en/latest/administer/system-managed-data-stores.htm#ESRI_SECTION1_6A836545AC0645B48C8B11631714A935) for more information about these PV-based folder data stores. Four example YAMLs are provided:
 
-- [local-pv-sc.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/local-pv-sc): A storage class for a local PV
+- [local-pv-sc.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/local-pv-sc.yaml): A storage class for a local PV
 - [local-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/local-pv.yaml): A local PV used for routing or geocoding
 - [nfs-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/nfs-pv.yaml): An NFS share accessed as a PV
-- [windows-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/115-updates/PVsAsDataStores/windows-pv.yaml): A Windows (SMB) share accessed as a PV
+- [windows-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/windows-pv.yaml): A Windows (SMB) share accessed as a PV
 
 When registering a PV-based folder data store, you must also provide a volume specification. The volume specification is a collection of properties that are used to create the persistent volume claim (PVC) object. The elements included in the volume specification are used for matching and binding the created PVC to the child PV object. At version 11.5, you can provide the volume specification values in Enterprise Manager when creating the data store. In version 11.4 however, you must provide a JSON file that contains the volume specification. 
 
@@ -58,7 +58,7 @@ Example JSON file contents that match the PV defined by [nfs-pv.yaml](https://gi
 ```
 ___
 
-Example JSON file contents that match the PV defined by [windows-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/115-updates/PVsAsDataStores/windows-pv.yaml):
+Example JSON file contents that match the PV defined by [windows-pv.yaml](https://github.com/Esri/arcgis-enterprise-on-kubernetes-resources/blob/main/PVsAsDataStores/windows-pv.yaml):
 ```json
 {
     "accessModes":["ReadOnlyMany"],
@@ -69,6 +69,6 @@ Example JSON file contents that match the PV defined by [windows-pv.yaml](https:
         }
     },
     "storageClassName": "",
-    "volumeName": "arcgis-enterprise-Windows-smb-pv"
+    "volumeName": "arcgis-enterprise-windows-smb-pv"
 }
 ```
