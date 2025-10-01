@@ -15,3 +15,5 @@ To avoid overlap with the ArcGIS Enterprise on Kubernetes namespace, the cluster
 <br>    b. Edit any necessary fields (i.e. uncomment node selector or change namespace)
 <br>    c. Apply YAML file
 <br>        i. `kubectl apply -f notebook-image-preloader.yaml`
+
+Note: When applying updates or upgrades to the ArcGIS Enterprise organization, the image tags in the daemonset containers should be updated to match the organization build.
