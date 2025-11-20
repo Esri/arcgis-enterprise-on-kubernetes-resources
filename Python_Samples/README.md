@@ -1,3 +1,8 @@
+# Python Samples 
+
+This directory provides sample python scripts for use with ArcGIS Enterprise on Kubernetes. 
+
+
 ### edit_service_recycleTime.py
 
 By default all services published to ArcGIS Enterprise on Kubernetes have their recycle time set to 00:00 UTC. This time may not be acceptable for all time zones. 
