@@ -18,3 +18,9 @@ To run the script, provide the following information:
 - If you want to restart the service after the time is edited, enter yes. If not, enter no 
 
 **Note:** at version 12.0 the service recycle option is not required as it's handled as part of the software when edits are made. However, at 11.5, the service needs to be restarted in order to see the change in recycle time. 
+
+This script references the following APIs
+- https://developers.arcgis.com/rest/enterprise-administration/enterprise/edit-service/
+- https://developers.arcgis.com/rest/enterprise-administration/enterprise/stop-service/
+- https://developers.arcgis.com/rest/enterprise-administration/enterprise/start-service/
+
