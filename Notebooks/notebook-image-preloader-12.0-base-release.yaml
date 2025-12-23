@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: arcgis-notebook-images-preloader
+spec:
+  selector:
+    matchLabels:
+      name: arcgis-notebook-images-preloader
+  template:
+    metadata:
+      labels:
+        name: arcgis-notebook-images-preloader
+    spec:
+      ### Optionally configure nodeSelector so that images are only pulled to certain nodes with matching labels
+      ### This may require manually added labels or using NodeGroup labels for cloud deployments
+      # nodeSelector:
+      #   arcgis/nodetype: "notebook"
+      ### Configure an init container for each image you want to pull
+      initContainers:
+        - name: notebookserver
+          imagePullPolicy: Always
+          image: docker.io/esridocker/arcgis-notebook-server:12.0.0.7286
+          command: ["sh", "-c", "'true'"]
+          resources:
+            limits:
+              cpu: 250m
+              memory: 64Mi
+            requests:
+              cpu: 125m
+              memory: 64Mi
+        - name: notebookinitcontainer
+          imagePullPolicy: Always
+          image: docker.io/esridocker/enterprise-admin-tools:12.0.0.7286
+          command: ["sh", "-c", "'true'"]
+          resources:
+            limits:
+              cpu: 250m
+              memory: 64Mi
+            requests:
+              cpu: 125m
+              memory: 64Mi
+        - name: notebookhandler
+          imagePullPolicy: Always
+          image: docker.io/esridocker/arcgis-notebook-handler:12.0.0.7286
+          command: ["sh", "-c", "'true'"]
+          resources:
+            limits:
+              cpu: 250m
+              memory: 64Mi
+            requests:
+              cpu: 125m
+              memory: 64Mi
+      ### Use the pause container to ensure the Pod goes into a `Running` phase
+      ### but doesn't consume many resources on the cluster
+      imagePullSecrets:
+        - name: arcgis-container-registry
+      containers:
+        - name: pause
+          imagePullPolicy: Always
+          image: docker.io/esridocker/arcgis-busybox:12.0.0.7286
+          command: ["sh", "-c", "trap : TERM INT; sleep 750d & wait"]
+          resources:
+            limits:
+              cpu: 125m
+              memory: 64Mi
+            requests:
+              cpu: 125m
+              memory: 64Mi
