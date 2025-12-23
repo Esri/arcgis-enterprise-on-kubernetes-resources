@@ -22,5 +22,5 @@ Note: When applying updates or upgrades to the ArcGIS Enterprise organization, t
 
 To keep the preloaded images synchronized with the organization, the corresponding YAML can be used to patch the existing daemonset.
 
-For example, if the base release daemonset is already running within the namespace and we want to patch the daemonset to use the updated images we'd run the following command:
+For example, if the base release daemonset is already running within the namespace and you want to patch the daemonset to use the updated images, you would run the following command:
 > kubectl apply -f <updatedDaemonsetYAML\> -n <imagePreloaderNamespace\>
