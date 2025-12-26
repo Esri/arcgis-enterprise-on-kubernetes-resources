@@ -17,3 +17,10 @@ To avoid overlap with the ArcGIS Enterprise on Kubernetes namespace, the cluster
 <br>        i. `kubectl apply -f notebook-image-preloader.yaml`
 
 Note: When applying updates or upgrades to the ArcGIS Enterprise organization, the image tags in the daemonset containers should be updated to match the organization build.
+
+## Upgrading to a newer version of the daemonset
+
+To keep the preloaded images synchronized with the organization, the corresponding YAML can be used to patch the existing daemonset.
+
+For example, if the base release daemonset is already running within the namespace and you want to patch the daemonset to use the updated images, you would run the following command:
+> kubectl apply -f <updatedDaemonsetYAML\> -n <imagePreloaderNamespace\>
