@@ -144,6 +144,8 @@ Deploy ArcGIS Enterprise on Kubernetes
 ### 1. Populate deploy.properties file
 Follow instructions from [Run the deployment script in silent mode](https://enterprise-k8s.arcgis.com/en/latest/deploy/run-the-deployment-script.htm#ESRI_SECTION1_930D8184D9E9480BB679ABED1743A8CE) in _Run the deployment script_.
 
+Note: ArcGIS Enterprise uses application-level encryption and stores secrets as Kubernetes secrets. It does not have the functionality to integrate with secrets managers such as Azure Key Vault.
+
 <details>
 <summary>Example deploy.properties file contents:</summary>
 <br>
