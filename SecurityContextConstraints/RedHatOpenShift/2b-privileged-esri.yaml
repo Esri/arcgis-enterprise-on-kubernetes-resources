@@ -20,7 +20,7 @@ allowPrivilegedContainer: true
 runAsUser:
   type: RunAsAny
 users: 
-  - 'system:serviceaccount:<namespace>:arcgis-elastic-serviceaccount'
+  - 'system:serviceaccount:<namespace>:arcgis-spatiotemporalindex-serviceaccount'
 allowHostDirVolumePlugin: false
 seccompProfiles:
   - runtime/default
