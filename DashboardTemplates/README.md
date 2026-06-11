@@ -6,7 +6,7 @@ Starting with ArcGIS Enterprise 12.1 on Kubernetes, the Grafana templates in thi
 
 ---
 
-With the removal of Grafana as part of the core product at 11.2, the dashboard templates that were previously included at instead hosted here for use with an organization-managed instance. For more information on how to use these templates, see the documentation to [view statistics](https://enterprise-k8s.arcgis.com/en/latest/administer/view-statistics.htm).
+With the removal of Grafana as part of the core product at 11.2, the dashboard templates that were previously included are instead hosted here for use with an organization-managed instance. For more information on how to use these templates, see the documentation to [view statistics](https://enterprise-k8s.arcgis.com/en/latest/administer/view-statistics.htm).
 
 These templates were created and tested using Grafana release v12.3.1.
 
