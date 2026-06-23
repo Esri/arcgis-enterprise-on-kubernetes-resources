@@ -1,6 +1,6 @@
 # Security Context Constraints
 
-> Note: Updates to the service accounts at 12.1 required changes to the recommended SCCs, prior versions should continue to use the resources provided in the `pre-12.1` prefix.
+> Note: Updates to the service accounts at 12.1 required changes to the recommended Security Context Constraints. For prior versions, use the resources provided in the `pre-12.1` directory.
 
 These YAML resources offer two configuration options:
 1. If the cluster nodes have been modified to increase the VM_MAX_MAP_COUNT to 212644 then 1-restricted-v2-esri.yaml can be applied to the cluster by the cluster admin and all ArcGIS Enterprise on Kubernetes pods will be admitted.
