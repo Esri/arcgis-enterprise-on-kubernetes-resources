@@ -892,8 +892,8 @@ Note: `K8S_NAMESPACE` must match the `NAMESPACE` variable and `ARCGIS_SITENAME`/
 #
 # Possible values for INGRESS_TYPE:
 #
-#   NodePort        - Exposes the Service on each Node's IP at a static port (the NodePort).
-#                     You'll be able to contact the NodePort Service, from outside the cluster,
+#   NodePort        - Exposes the Service on each Node's IP at a static port (the NodePort). 
+#                     You'll be able to contact the NodePort Service, from outside the cluster, 
 #                     by requesting <NodeIP>:<NodePort>.
 #   LoadBalancer    - Exposes the Service externally using a cloud provider's load balancer.
 #                     The load balancer is created and configured automatically as a part of
@@ -901,7 +901,7 @@ Note: `K8S_NAMESPACE` must match the `NAMESPACE` variable and `ARCGIS_SITENAME`/
 #
 INGRESS_TYPE="LoadBalancer"
 #
-# Possible values for LOAD_BALANCER_TYPE (must choose one if INGRESS_TYPE="LoadBalancer", else
+# Possible values for LOAD_BALANCER_TYPE (must choose one if INGRESS_TYPE="LoadBalancer", else 
 # leave it blank):
 #
 #   azure-external   - Azure Load Balancer (External)
@@ -910,6 +910,7 @@ INGRESS_TYPE="LoadBalancer"
 #   aws-nlb-internal - AWS Network Load Balancer (Internal)
 #   gcp-external     - Google Cloud Platform TCP Load Balancer (External)
 #   gcp-internal     - Google Cloud Platform TCP Load Balancer (Internal)
+#   generic-lb       - Generic load balancer type
 #
 LOAD_BALANCER_TYPE="aws-nlb-external"
 #
@@ -922,8 +923,8 @@ INGRESS_SERVICE_USE_CLUSTER_IP=false
 #
 LOAD_BALANCER_IP=""
 #
-# NodePort value in the range 30000-32767 (optional).
-# Leave it blank if you want Kubernetes Control Plane to assign an available port.
+# NodePort value in the range 30000-32767 (optional). 
+# Leave it blank if you want Kubernetes Control Plane to assign an available port. 
 #
 NODE_PORT_HTTPS=""
 
@@ -973,6 +974,16 @@ CONTAINER_REGISTRY="${REGISTRY_HOST}/${REGISTRY_REPO}"
 #
 USE_DOCKER_CONFIG_FILE_AS_REGISTRY_SECRET=false
 #
+# Set CONTAINER_REGISTRY_AUTHENTICATION_TYPE to one of two accepted values:
+#
+#     credential - Use usename/password registry authentication
+#     integrated - The cluster manages registry authentication
+#
+# When set to "integrated" the CONTAINER_REGISTRY_USERNAME and the
+# CONTAINER_REGISTRY_PASSWORD properties are ignored.
+#
+CONTAINER_REGISTRY_AUTHENTICATION_TYPE="credential"
+#
 # Registry username for an account with permissions to pull from the Registry URL specified above.
 # This will be used to create a registry secret.
 #
@@ -994,24 +1005,24 @@ CONTAINER_REGISTRY_PASSWORD="U2FsdGVkX19gXwvyDcKh8owl6SjHYEPH7Xz66s8ehRWivyfFox9
 # Registry secret name for container credentials.
 #
 CONTAINER_IMAGE_PULL_SECRET_NAME="${ARCGIS_SITENAME}-container-registry"
+#	
+# The default version tag for pulling images.	
 #
-# The default version tag for pulling images.
-#
-VERSION_TAG="${VERSION_TAG:-11.5.0.6745}"
+VERSION_TAG="${VERSION_TAG:-12.1.0.8325}"
 
 # ------------------------------------
 # FULLY QUALIFIED DOMAIN NAME
 # ------------------------------------
 #
-# The fully qualified domain name (FQDN) to access ArcGIS Enterprise on Kubernetes.
+# The fully qualified domain name (FQDN) to access ArcGIS Enterprise on Kubernetes. 
 # This FQDN points to a load balancer, reverse proxy, edge router, or other web front-end
 # configured to route traffic to the ingress controller.
 # For example: <hostname>.<Domain>.com
 #
 ARCGIS_ENTERPRISE_FQDN="gis.prod.organization.com"
 #
-# Enter the context path to be used in the URL for ArcGIS Enterprise on Kubernetes.
-# For example, the context path of 'https://<FQDN>/arcgis/admin' would be 'arcgis'.
+# Enter the context path to be used in the URL for ArcGIS Enterprise on Kubernetes. 
+# For example, the context path of 'https://<FQDN>/arcgis/admin' would be 'arcgis'. 
 # The path needs to be single level; more than one level is not supported.
 #
 CONTEXT="arcgis"
@@ -1024,16 +1035,16 @@ ROOT_ORG_BASE_URL="https://${ARCGIS_ENTERPRISE_FQDN}/${CONTEXT}/"
 # TLS CERTIFICATE
 # ------------------------------------
 #
-# Choose one of the options below to enable HTTPS communication to the ingress
-# controller using Transport Layer Security (TLS). Unused options in this section
-# should be defined with empty quotes "".
+# Choose one of the options below to enable HTTPS communication to the ingress 
+# controller using Transport Layer Security (TLS). Unused options in this section 
+# should be defined with empty quotes "". 
 #
 # Option 1: Use an existing Kubernetes TLS secret that contains a private key and a certificate.
 # Enter the name of the existing TLS secret:
 #
 INGRESS_SERVER_TLS_SECRET="prod-wildcard-cert"
 #
-# Option 2: Use a .pfx file that contains the private key and certificate. Enter the full path
+# Option 2: Use a .pfx file that contains the private key and certificate. Enter the full path 
 # and password of the .pfx file:
 #
 # NOTE: This password is AES-256 encrypted using the ENCRYPTION_KEYFILE specified above
@@ -1046,7 +1057,7 @@ INGRESS_SERVER_TLS_PFX_PSSWD=""
 INGRESS_SERVER_TLS_KEY_FILE=""
 INGRESS_SERVER_TLS_CRT_FILE=""
 #
-# Option 4: Generate a self-signed certificate. Enter the common name for the self-signed
+# Option 4: Generate a self-signed certificate. Enter the common name for the self-signed 
 # certificate:
 #
 INGRESS_SERVER_TLS_SELF_SIGN_CN=""
@@ -1075,14 +1086,71 @@ INGRESS_SSL_PROTOCOLS="TLSv1.2 TLSv1.3"
 # Supported Cipher Suites
 INGRESS_SSL_CIPHERS="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-RSA-CHACHA20-POLY1305:AES256-GCM-SHA384:AES256-SHA256:AES256-SHA:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:AES128-GCM-SHA256:AES128-SHA256:AES128-SHA:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA"
 
+# Disabling this property will prevent any network policies from being created when deploying and configuring
+# an ArcGIS Enterprise on Kubernetes organization. This decreases the overall security posture of the software
+# and should only be done by administrators that have special requirements around network policy objects or
+# have implemented separate controls to protect cross-namespace and external network access to pod networks.
+ENABLE_NETWORK_POLICIES=true
+
 # If your Kubernetes cluster has a domain name other than cluster.local, use this
 # property to specify the domain name
-K8S_CLUSTER_DOMAIN="${K8S_CLUSTER_DOMAIN:-cluster.local}"
+K8S_CLUSTER_DOMAIN="cluster.local"
 
-# If you are deploying ArcGIS Enterprise on Kubernetes and your
-# Kubernetes cluster spans three or more availability zones, update
+# If you are deploying ArcGIS Enterprise on Kubernetes and your 
+# Kubernetes cluster spans three or more availability zones, update 
 # 'kubernetes.io/hostname' to 'topology.kubernetes.io/zone'
 K8S_AVAILABILITY_TOPOLOGY_KEY="kubernetes.io/hostname"
+
+# Custom ingress annotations
+#
+# Allow for additional annotations to be added to the LoadBalancer ingress
+# service created during deployment.
+#
+# Use the following syntax:
+#
+# INGRESS_CUSTOM_ANNOTATION1="key=value"              # simple values
+# INGRESS_CUSTOM_ANNOTATION2='key={"foo": "bar"}'     # for values with quotes
+#
+# Examples:
+#
+# INGRESS_CUSTOM_ANNOTATION1="service.beta.kubernetes.io/aws-load-balancer-attributes=deletion_protection.enabled=true,load_balancing.cross_zone.enabled=true"
+# INGRESS_CUSTOM_ANNOTATION2='cloud.google.com/app-protocols={"https": "HTTPS"}'
+#
+# You can append additional annotation properties by incrementing the suffix.
+# For example:
+#
+# INGRESS_CUSTOM_ANNOTATION4=""
+#
+INGRESS_CUSTOM_ANNOTATION1=""
+INGRESS_CUSTOM_ANNOTATION2=""
+INGRESS_CUSTOM_ANNOTATION3=""
+
+# ------------------------------------
+# CLUSTER-LEVEL INGRESS CONTROLLER YAML FILENAME (Optional)
+#
+# If you have indicated that you would like to use a cluster-level ingress
+# controller (by setting INGRESS_SERVICE_USE_CLUSTER_IP=true) for incoming
+# traffic, use one of the YAML templates that can be found in the
+# setup/templates/layer-7-templates folder to create or integrate with a
+# layer 7 load balancer that routes incoming traffic to your ArcGIS Enterprise
+# deployment:
+#
+#    aws-alb-external.yaml.template
+#    aws-alb-internal.yaml.template
+#    azure-agw-ingress-controller.yaml.template
+#    gcp-alb-external.yaml.template
+#    gcp-alb-internal.yaml.template
+#    user-defined-ingress.yaml.template
+#
+# Copy one of these templates locally (remove the .template suffix) and add your
+# load balancer configuration info.
+#
+# Then set CLUSTER_INGRESS_CONTROLLER_YAML_FILENAME to the full path of this
+# file. This file can be deleted following a successful deployment. If one of
+# these templates does not apply to your deployment pattern, you can also
+# supply one of your own custom YAML files.
+#
+CLUSTER_INGRESS_CONTROLLER_YAML_FILENAME=""
 
 # ------------------------------------
 # ADD CUSTOM VARIABLES HERE
@@ -1178,7 +1246,8 @@ Create your ArcGIS Enterprise on Kubernetes organization
                 "RELATIONAL",
                 "BLOB",
                 "IN_MEM_CACHE",
-                "INDEXER"
+                "INDEXER",
+                "QUEUE"
             ]
         }
     ]
@@ -1202,23 +1271,18 @@ Note: `K8S_NAMESPACE` must match the `NAMESPACE` variable and `CONTEXT` must mat
 # ------------------------------------
 # ARCHITECTURE PROFILE
 #
-# Specify the deployment profile you wish to use.
+# Specify the availability and performance profiles you wish to use.
 # ------------------------------------
 #
-# Profiles
+# Availability Profiles
 # ------------------------------------
 # development
-# standard-availability
-# enhanced-availability
-SYSTEM_ARCH_PROFILE="enhanced-availability"
-
-# ------------------------------------
-# PERFORMANCE PROFILE
-#
-# Specify the performance profile you wish to use.
+# standard
+# enhanced
+AVAILABILITY_PROFILE=""
 # ------------------------------------
 #
-# Profiles
+# Performance Profiles
 # ------------------------------------
 # standard
 # enhanced
