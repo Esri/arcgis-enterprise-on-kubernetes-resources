@@ -43,7 +43,7 @@ Prepare the client workstation
 ### 1. Install kubectl
 &emsp;a. Download kubectl
 ```shell
-curl -LO https://dl.k8s.io/release/v1.32.6/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl
 ```
 
 &emsp;b. Add executable permissions and move to location on path
@@ -131,7 +131,7 @@ az aks create \
   --generate-ssh-keys
 ```
 
-&emsp;&emsp;Note: AKS always creates one system node pool at cluster creation to run system components (CoreDNS, kube-proxy, etc.). Use `--node-count 2` or higher for production clusters to maintain CoreDNS availability across node failures. Cluster creation typically takes 5ΓÇô10 minutes.
+&emsp;&emsp;Note: AKS always creates one system node pool at cluster creation to run system components (CoreDNS, kube-proxy, etc.). Use `--node-count 2` or higher for production clusters to maintain CoreDNS availability across node failures. Cluster creation typically takes 5-10 minutes.
 
 &emsp;&emsp;Reference: https://learn.microsoft.com/en-us/azure/aks/node-auto-provisioning
 

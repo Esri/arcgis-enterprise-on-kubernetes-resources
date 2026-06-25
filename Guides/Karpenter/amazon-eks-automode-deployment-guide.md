@@ -44,7 +44,7 @@ Prepare the client workstation
 ### 1. Install kubectl
 &emsp;a. Download kubectl
 ```shell
-curl -LO https://dl.k8s.io/release/v1.32.6/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl
 ```
 
 &emsp;b. Add executable permissions and move to location on path
@@ -74,25 +74,7 @@ aws configure
 
 &emsp;&emsp;Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html
 
-### 3. Install eksctl
-&emsp;a. Download eksctl
-```shell
-ARCH=amd64 && \
-PLATFORM=$(uname -s)_$ARCH && \
-curl -sLO "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
-```
-
-&emsp;b. Extract from tarball archive and move to location on path
-```shell
-tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && \
-rm eksctl_$PLATFORM.tar.gz && \
-sudo mv /tmp/eksctl /usr/local/bin && \
-rm -f eksctl_$PLATFORM.tar.gz
-```
-
-&emsp;&emsp;Reference: https://github.com/weaveworks/eksctl/blob/main/README.md#installation
-
-### 4. Install Helm v3
+### 3. Install Helm v3
 ```shell
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
@@ -103,14 +85,14 @@ rm -f get_helm.sh
 &emsp;&emsp;Reference: https://helm.sh/docs/intro/install/
 
 
-### 5. Download ArcGIS Enterprise on Kubernetes deployment scripts and locate license file
+### 4. Download ArcGIS Enterprise on Kubernetes deployment scripts and locate license file
 &emsp;a. Sign in to My Esri and download deployment scripts and license file  
 &emsp;b. Extract deployment scripts
 ```shell
 tar zxf ArcGIS_Enterprise_Kubernetes_*.tar.gz -C <destinationPath>
 ```
 
-### 6. Set session variables
+### 5. Set session variables
 First, list available VPCs to identify the one you want to deploy into:
 ```shell
 aws ec2 describe-vpcs \
@@ -130,7 +112,7 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output t
 echo "Account ID: ${AWS_ACCOUNT_ID}"
 ```
 
-### 7. Create required IAM roles
+### 6. Create required IAM roles
 The following IAM roles must exist in your AWS account before provisioning the cluster. EKS Auto Mode uses Pod Identity Associations, requiring dedicated roles for the EBS CSI driver, VPC CNI plugin, and ArcGIS workloads.
 
 &emsp;a. Create the EBS CSI Driver Pod Identity role
@@ -339,7 +321,7 @@ aws eks create-cluster \
     --access-config authenticationMode=API_AND_CONFIG_MAP
 ```
 
-Wait for the cluster to become active (typically 15ΓÇô20 minutes):
+Wait for the cluster to become active (typically 15-20 minutes):
 ```shell
 aws eks wait cluster-active \
   --name ${CLUSTER_NAME} \
@@ -781,7 +763,7 @@ aws eks create-addon \
 &emsp;&emsp;Reference: https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
 
 ### 4. Install AWS Load Balancer Controller
-The AWS Load Balancer Controller manages ALBs and NLBs for Kubernetes Ingress and Service resources. It is installed via Helm and pinned to the `critical-addons` NodePool.
+The AWS Load Balancer Controller manages ALBs and NLBs for Kubernetes Ingress and Service resources. It is installed via Helm, uses EKS Pod Identity for AWS credentials, and is pinned to the `critical-addons` NodePool.
 
 &emsp;a. Tag subnets for ELB discovery. The controller discovers subnets through tags. For public subnets (used for internet-facing load balancers):
 ```shell
@@ -810,32 +792,43 @@ done
 &emsp;b. Download the IAM policy and create it in your account
 ```shell
 curl -sS -o /tmp/lb-iam-policy.json \
-  https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.7.2/docs/install/iam_policy.json
+  https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
 
 aws iam create-policy \
-  --policy-name AWSLoadBalancerControllerIAMPolicy \
+  --policy-name AWSLoadBalancerControllerIAMPolicy-${CLUSTER_NAME} \
   --policy-document file:///tmp/lb-iam-policy.json
 ```
 
-&emsp;c. Create the OIDC identity provider for the cluster if it does not already exist
+&emsp;c. Create a Pod Identity IAM role for the controller
 ```shell
-eksctl utils associate-iam-oidc-provider \
-  --region ${AWS_REGION} \
-  --cluster ${CLUSTER_NAME} \
-  --approve
+aws iam create-role \
+  --role-name AmazonEKSPodIdentityAWSLoadBalancerControllerRole-${CLUSTER_NAME} \
+  --assume-role-policy-document '{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {"Service": "pods.eks.amazonaws.com"},
+        "Action": ["sts:AssumeRole", "sts:TagSession"]
+      }
+    ]
+  }'
+
+aws iam attach-role-policy \
+  --role-name AmazonEKSPodIdentityAWSLoadBalancerControllerRole-${CLUSTER_NAME} \
+  --policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy-${CLUSTER_NAME}
 ```
 
-&emsp;d. Create the IAM service account
+&emsp;d. Create the Kubernetes service account and Pod Identity association
 ```shell
-eksctl create iamserviceaccount \
-  --cluster ${CLUSTER_NAME} \
+kubectl create serviceaccount aws-load-balancer-controller -n kube-system --dry-run=client -o yaml | kubectl apply -f -
+
+aws eks create-pod-identity-association \
+  --cluster-name ${CLUSTER_NAME} \
   --namespace kube-system \
-  --name aws-load-balancer-controller \
-  --role-name AmazonEKSLoadBalancerControllerRole-${CLUSTER_NAME} \
-  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy \
-  --override-existing-serviceaccounts \
-  --region ${AWS_REGION} \
-  --approve
+  --service-account aws-load-balancer-controller \
+  --role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKSPodIdentityAWSLoadBalancerControllerRole-${CLUSTER_NAME} \
+  --region ${AWS_REGION}
 ```
 
 &emsp;e. Add the EKS Helm repository and install the controller
@@ -1583,13 +1576,9 @@ Use the following steps to delete all resources created by this guide in reverse
 helm uninstall aws-load-balancer-controller -n kube-system
 ```
 
-Delete the IAM service account and its associated role:
+Delete the Kubernetes service account:
 ```shell
-eksctl delete iamserviceaccount \
-  --cluster ${CLUSTER_NAME} \
-  --namespace kube-system \
-  --name aws-load-balancer-controller \
-  --region ${AWS_REGION}
+kubectl delete serviceaccount aws-load-balancer-controller -n kube-system
 ```
 
 ### 2. Delete the EKS cluster
@@ -1641,7 +1630,8 @@ aws iam delete-role --role-name eks-automode-node-role-${CLUSTER_NAME}
 ```shell
 for ROLE in \
   AmazonEKSPodIdentityAmazonEBSCSIDriverRole-${CLUSTER_NAME} \
-  AmazonEKSPodIdentityAmazonVPCCNIRole-${CLUSTER_NAME}; do
+  AmazonEKSPodIdentityAmazonVPCCNIRole-${CLUSTER_NAME} \
+  AmazonEKSPodIdentityAWSLoadBalancerControllerRole-${CLUSTER_NAME}; do
   ATTACHED=$(aws iam list-attached-role-policies --role-name "$ROLE" \
     --query 'AttachedPolicies[].PolicyArn' --output text)
   for POLICY_ARN in $ATTACHED; do
@@ -1649,6 +1639,9 @@ for ROLE in \
   done
   aws iam delete-role --role-name "$ROLE"
 done
+
+aws iam delete-policy \
+  --policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy-${CLUSTER_NAME}
 ```
 
 ### 4. Delete the security group
