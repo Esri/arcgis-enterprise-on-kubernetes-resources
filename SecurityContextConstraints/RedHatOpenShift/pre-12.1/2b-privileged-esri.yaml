@@ -16,17 +16,11 @@ allowHostPorts: false
 priority: null
 requiredDropCapabilities:
   - ALL
-allowPrivilegedContainer: false
+allowPrivilegedContainer: true
 runAsUser:
-  type: MustRunAsRange
+  type: RunAsAny
 users: 
-  - 'system:serviceaccount:<namespace>:arcgis-prometheus-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-admin-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-queue-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-ingress-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-noaccess-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-cloudservice-readwrite-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-cloudservice-readonly-serviceaccount'
+  - 'system:serviceaccount:<namespace>:arcgis-elastic-serviceaccount'
 allowHostDirVolumePlugin: false
 seccompProfiles:
   - runtime/default
@@ -35,7 +29,7 @@ seLinuxContext:
   type: MustRunAs
 readOnlyRootFilesystem: false
 metadata:
-  name: restricted-v2-esri
+  name: privileged-esri
 fsGroup:
   type: MustRunAs
   ranges:
@@ -51,13 +45,11 @@ volumes:
   - downwardAPI
   - emptyDir
   - ephemeral
-  - nfs
   - persistentVolumeClaim
   - projected
   - secret
 allowHostPID: false
 allowHostNetwork: false
-allowPrivilegeEscalation: false
+allowPrivilegeEscalation: true
 apiVersion: security.openshift.io/v1
 allowedCapabilities:
-  - NET_BIND_SERVICE

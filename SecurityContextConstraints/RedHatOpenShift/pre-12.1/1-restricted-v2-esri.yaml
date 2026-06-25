@@ -19,14 +19,7 @@ requiredDropCapabilities:
 allowPrivilegedContainer: false
 runAsUser:
   type: MustRunAsRange
-users: 
-  - 'system:serviceaccount:<namespace>:arcgis-prometheus-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-admin-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-queue-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-ingress-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-noaccess-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-cloudservice-readwrite-serviceaccount'
-  - 'system:serviceaccount:<namespace>:arcgis-cloudservice-readonly-serviceaccount'
+users: []
 allowHostDirVolumePlugin: false
 seccompProfiles:
   - runtime/default
@@ -41,7 +34,8 @@ fsGroup:
   ranges:
   - min: 117932853
     max: 117932853
-groups: []
+groups:
+  - 'system:serviceaccounts:<namespace>'
 kind: SecurityContextConstraints
 defaultAddCapabilities: null
 supplementalGroups:
