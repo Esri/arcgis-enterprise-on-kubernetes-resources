@@ -94,7 +94,7 @@ Before rotating worker nodes, enable read-only mode in ArcGIS Enterprise Manager
    ```
 6. After the old nodes have been removed, disable Read only mode in ArcGIS Enterprise Manager to resume normal operations:
    ```
-   Enterprise Manager ΓåÆ Settings ΓåÆ Read-only mode ΓåÆ Disable Read-only mode
+   Enterprise Manager → Settings → Read-only mode → Disable Read-only mode
    ```
 
 7. Monitor the cluster for any issues and ensure all workloads are running smoothly on the new nodes.

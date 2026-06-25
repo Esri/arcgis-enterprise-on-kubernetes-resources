@@ -686,7 +686,7 @@ Create your ArcGIS Enterprise on Kubernetes organization
                     "requiredDuringSchedulingIgnoredDuringExecution": {
                         "nodeSelectorTerms": [
                             {
-                                "matchExpressions": [         // It should must match the label and taint applied to the stateful node pool
+                                "matchExpressions": [
                                     {
                                         "key": "workload",
                                         "operator": "In",
