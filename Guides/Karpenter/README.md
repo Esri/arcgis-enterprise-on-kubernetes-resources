@@ -104,12 +104,12 @@ Deployment guides
 ### Amazon EKS Auto Mode
 Follow the step-by-step guide to create an EKS Auto Mode cluster, configure NodePools and NodeClasses, set up workload identity, and deploy ArcGIS Enterprise on Kubernetes.
 
-&emsp;&emsp;[Amazon EKS Auto Mode Deployment Guide](../../aws/amazon-eks-automode-deployment-guide.md)
+&emsp;&emsp;[Amazon EKS Auto Mode Deployment Guide](amazon-eks-automode-deployment-guide.md)
 
 ### Azure AKS Node Auto Provisioning
 Follow the step-by-step guide to create an AKS cluster with Node Auto Provisioning enabled, configure NodePools and NodeClasses, set up workload identity, and deploy ArcGIS Enterprise on Kubernetes.
 
-&emsp;&emsp;[Azure AKS Node Auto Provisioning Deployment Guide](../../azure/azure-nap-deployment-guide.md)
+&emsp;&emsp;[Azure AKS Node Auto Provisioning Deployment Guide](azure-nap-deployment-guide.md)
 
 Official documentation
 ---

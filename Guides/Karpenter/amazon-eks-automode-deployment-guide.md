@@ -156,7 +156,7 @@ aws iam attach-role-policy \
 ```
 
 >[!NOTE]
-> Follow the steps mentioned <linkPlaceholder> to create the ArcGIS Pod Identity role only if you plan to use AWS services such as S3 for your ArcGIS deployment. If your deployment does not require AWS service access, you can skip step.
+> Follow the steps mentioned [here](https://doc.esri.com/en/arcgis-enterprise-k8s/latest/deploy/cloud-permissions.html#03Q) to create the ArcGIS Pod Identity role only if you plan to use AWS services such as S3 for your ArcGIS deployment. If your deployment does not require AWS service access, you can skip step.
 
 Create an Amazon EKS cluster
 ---
